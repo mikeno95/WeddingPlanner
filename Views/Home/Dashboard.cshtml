@@ -1,0 +1,76 @@
+@{ 
+    ViewData["Title"] = "Dashboard"; 
+    Layout = "_Layout"; 
+    var logged = ViewBag.LoggedUser;
+}
+
+<h2>Welcome, @logged.FirstName</h2>
+@{
+    if(ViewBag.RSVPSuccess!=null)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong> @ViewBag.RSVPSuccess
+        </div>
+    }
+    if(ViewBag.DeleteSuccess!=null)
+    {
+        <div class="alert alert-danger">
+            <strong>Success!</strong> @ViewBag.DeleteSuccess
+        </div>
+    }
+    if(ViewBag.unRSVPSuccess!=null)
+    {
+        <div class="alert alert-warning">
+            <strong>Success!</strong> @ViewBag.unRSVPSuccess
+        </div>
+    }
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Wedding</th>
+            <th>Date</th>
+            <th>Guest</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach(var wedding in ViewBag.WeddingList)
+            {
+                <tr>
+                    <td><a href="/Home/ShowWedding/@wedding.WeddingId">@wedding.WedderOne & @wedding.WedderTwo</a></td>
+                    <td>@wedding.Date.ToString("MMMM dd, yyyy")</td>
+                    <td>@wedding.Guests.Count</td>
+                    <td>
+                        @{
+                            bool isRSVP=false;
+                            foreach(var rsvp in wedding.Guests)
+                            {
+                                if(rsvp.Guest==logged)
+                                {
+                                    isRSVP=true;
+                                }
+                            }
+                             if(wedding.UserId==logged.UserId)
+                             {
+                                <a href="/wedding/delete/@wedding.WeddingId">Delete</a>
+                             }
+                             else if (isRSVP)
+                             {
+                                <a href="/unRSVP/@wedding.WeddingId">Un-RSVP</a>
+                             }
+                             else 
+                             {
+                                 <a href="/RSVP/@wedding.WeddingId">RSVP</a>
+                             }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<form action="wedding" method="GET">
+    <button class="btn btn-info">Add New Wedding</button>
+</form>

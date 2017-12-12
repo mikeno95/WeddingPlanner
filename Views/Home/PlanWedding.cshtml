@@ -1,0 +1,49 @@
+@{ 
+    ViewData["Title"] = "Add Wedding"; 
+    Layout = "_Layout"; 
+}
+<h3>Plan Your Wedding</h3>
+@model WeddingPlanner.Models.WeddingViewModel
+<form asp-controller="Home" asp-action="CreateWedding" method="POST">
+    <div class="form-group">
+        <label asp-for="WedderOne">Wedder One:</label>
+        <span class="err" asp-validation-for="WedderOne"></span>
+        <input class="form-control" asp-for="WedderOne">
+    </div>
+    <div class="form-group">
+        <label asp-for="WedderTwo">Wedder Two:</label>
+        <span class="err" asp-validation-for="WedderTwo"></span>
+        <input class="form-control" asp-for="WedderTwo">
+    </div>
+    <div class="form-group">
+        <label asp-for="Date">Date:</label>
+        <span class="err" asp-validation-for="Date"></span>
+        <input type="date" class="form-control" asp-for="Date">
+    </div>
+    <div class="form-group">
+        <label asp-for="StreetAddress">Street Address:</label>
+        <span class="err" asp-validation-for="StreetAddress"></span>
+        <input class="form-control" asp-for="StreetAddress">
+    </div>
+    <div class="form-group">
+        <label asp-for="City">City:</label>
+        <span class="err" asp-validation-for="City"></span>
+        <input class="form-control" asp-for="City">
+    </div>
+    <div class="form-group">
+        <label asp-for="State">State:</label>
+        <span class="err" asp-validation-for="State"></span>
+        <select class="form-control" asp-for="State">
+            @foreach(string state in ViewBag.States)
+            {
+                <option value="@state">@state</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Zipcode">Zipcode:</label>
+        <span class="err" asp-validation-for="Zipcode"></span>
+        <input class="form-control" asp-for="Zipcode">
+    </div>
+    <button class="btn btn-info">Create Wedding</button>
+</form>

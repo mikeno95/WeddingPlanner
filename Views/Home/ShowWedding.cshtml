@@ -1,0 +1,19 @@
+@{ 
+    ViewData["Title"] = "Add Wedding"; 
+    Layout = "_Layout"; 
+    var wedding = ViewBag.Wedding; 
+}
+<h2>@wedding.WedderOne and @wedding.WedderTwo's Wedding</h2>
+<iframe style="display:inline-block;" src="@ViewBag.Source"></iframe>
+<div class="form-group">
+    <label>Date:</label>
+    <p style="display:inline-block;">@wedding.Date.ToString("MMMM dd, yyyy")</p>
+</div>
+
+<h3>Guests:</h3>
+<ul class="list-group">
+    @foreach(var rsvp in wedding.Guests) 
+    {
+        <li class="list-group-item" style="width: 200px;">@rsvp.Guest.FirstName @rsvp.Guest.LastName</li>
+    }
+</ul>
